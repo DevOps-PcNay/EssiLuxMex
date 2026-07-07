@@ -1,0 +1,12 @@
+# Oculta todas las carpeta del proyecto, para que el usuario no pu$
+Options All -Indexes
+# URL amigables, no las muestra la ruta completa en la barra de di$
+# URL amigables
+RewriteEngine On
+
+#Permita letras y numeros
+# Cuando se este enviando a traves de la ruta "index.php" con vari$
+# URL amigable, expresion regular "^()$" a utilizar ^([-a-zA-Z0-9]$
+#$1 = Convierte cualquier valor que traiga "ruta y la convierta en$
+
+RewriteRule ^([-a-zA-Z0-9]+)$ index.php?ruta=$1

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    <h1>Juan De La Torre</h1> 
+  </header>
+
+  <section>
+    <h2>Diseno y Desarrollo Web Freelance</h2>
+    <p>Guadalajara, Jalisco</p>    
+  </section>
+  
+  <h2>Diseno y Desarrollo Web Freelance</h2>
+  
+  <p>Guadalajara, Jalisco</p>
+  
+  <h2>Mis Servicios</h2>
+  
+  <h3>Diseno Web</h3> 
+  <p> Cras at tellus ac dui auctor sagittis sed vitae nisl. Maecenas felis erat, varius vitae placerat sit amet, gravida a dolor. Aliquam consequat nulla et mi pulvinar fringilla.</p>
+  
+  <h3>Aplicaciones Web</h3> 
+  <p> Cras at tellus ac dui auctor sagittis sed vitae nisl. Maecenas felis erat, varius vitae placerat sit amet, gravida a dolor. Aliquam consequat nulla et mi pulvinar fringilla.</p>
+
+  <h3>Ecommerce</h3> 
+  <p> Cras at tellus ac dui auctor sagittis sed vitae nisl. Maecenas felis erat, varius vitae placerat sit amet, gravida a dolor. Aliquam consequat nulla et mi pulvinar fringilla.</p>
+
+  <h2>Contacto</h2>
+
+  <p>Todo Los Derechos Reservados.</p>
+
+</body>
+</html>
+
+
+
+
