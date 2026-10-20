@@ -541,15 +541,17 @@ $meses = Array('Ene','Jan','Feb','Mar','Apr','Abr','May','Jun','Jul','Agu','Ago'
 
 	
 
-	//$dia = Null;
+	$dia = 0;
 	$mes = 0;
 	$anno = 0; //$fecha_separada[2];
+	$fecha_americana = 'N';
 
 	// Validando el año
 	// $anno_actual = date("Y"); // Obtiene el Año actual
 	
+	
 
-	if (intval($fecha_separada[2]) > 2020 || intval($fecha_separada[2]) <= 2050) // Fecha Americana
+	if (intval($fecha_separada[2]) > 2018 && intval($fecha_separada[2]) <= 2050) // Fecha Americana
 	{
 			$anno = $fecha_separada[2];
 	}
@@ -558,124 +560,33 @@ $meses = Array('Ene','Jan','Feb','Mar','Apr','Abr','May','Jun','Jul','Agu','Ago'
 		$anno = '1970';
 	}
 
-	// Cuando es Formato de fecha Mexicano
-	if ((intval($fecha_separada[0]) > 0 && intval($fecha_separada[0]) <= 31))
-	{
-		/*
-		// Cuando el mes es con tres caracteres
-
-		// Formato americano, el nombre de mes escrito
-		if (in_array($fecha_separada[0],$meses))
+	// Cuando teclean el numero de mes mayor a 12
+	if ((intval($fecha_separada[1]) > 0) && (intval($fecha_separada[1]) > 12) && (intval($fecha_separada[1]) <= 31))
 		{
-			$mes_letra = 'S';
+			$dia = $fecha_separada[1];
 			$mes = nombreMes($fecha_separada[0]);
-			$indice_dia = 1;
-			$indice_mes = 0;
-		}
-
-		// Formato mexicano, el nombre de mes escrito
-		if (in_array($fecha_separada[1],$meses))
-		{
-			$mes_letra = 'S';
-			$mes = nombreMes($fecha_separada[1]);
-			$indice_dia = 0;
-			$indice_mes = 1;
-		}
-
-		*/
-
-			$dia = $fecha_separada[0];
-			$mes = nombreMes($fecha_separada[1]);
-
-	}
-	else
+			$fecha_americana = 'S';
+		}	
+	// Cuando es Formato de fecha Mexicano
+	if ((intval($fecha_separada[0]) > 0) && (intval($fecha_separada[0]) <= 31) && ($fecha_americana == 'N'))
 	{
-		$dia = 0;
+		$dia = $fecha_separada[0];
 		$mes = nombreMes($fecha_separada[1]);
 	}
 
-	/*
-
-	// Validando la fecha cuando mes sea "Febrero"
-	if ($mes == 'Feb' || $mes == '02' || $mes == '2')
+	if ((intval($fecha_separada[0]) == 0) && (intval($fecha_separada[1]) <= 31)  &&  ((intval($fecha_separada[1]) > 0)))
 	{
-		if (intval($fecha_separada[$indice_dia]) > 0 && intval($fecha_separada[$indice_dia]) <= 29) // Fecha Americana
-		{
-				$dia = $fecha_separada[$indice_dia];
-				
-		}
-		else
-		{
-			$dia = 0; // $fecha_separada[0];	
-		}
+		$mes = nombreMes($fecha_separada[1]);		
 	}
-	else 
-	{
-			if (intval($fecha_separada[$indice_dia]) > 0 && intval($fecha_separada[$indice_dia]) <= 31) // Fecha Americana
-			{
-					$dia = $fecha_separada[$indice_dia];
 
-			}
-			else
-			{
-				$dia = 0; // $fecha_separada[0];
-			
-			}
 
-	} // if ($mes == 'Feb')
-
-*/
-
-	$fecha = $dia.'/'.$mes.'/'.$anno;			
-
-	/*
-	if ($indice_dia == 0)
+		if (($dia == 0) && ($mes == 0 ) && ($anno == '1970'))
 		{
-			$fecha = $dia.'/'.$mes.'/'.$anno;			
-		}
-	else
-		{
-			$fecha = $mes.'/'.$dia.'/'.$anno;
-		}
-	
-	*/
-
-/*
-
-	if (intval($fecha_separada[0]) > 12) // Fecha Mexicana
-	{
-		if (intval($fecha_separada[0]) < 31)
-		{
-			$fecha["fecha_mex"] = 'S';
-			//print_r("Esta en el formato de Mexicano de DD/MM/AA");	
-			//print_r($fecha_separada);
-		} 
-		else
-		{			
-			$fecha["fecha_mex"] = 'N';
+			$mes = nombreMes($mes);
+			$fecha = $dia.'/'.$mes.'/'.$anno;				
 		}
 
-		
-	}
-	// Validando Mes (Formato Americano)
-	if (intval($fecha_separada[0]) < 12) 
-	{
-		if (intval($fecha_separada[0]) > 1)
-		{
-			//print_r("Esta en el formato de Americano de MM/DD/AA");
-			//print_r($fecha_separada);
-			//print_r(" ");
-			//print_r($fecha_separada[1]);
-
-			$fecha["fecha_americ"] = 'S';
-		}
-		else
-		{
-			$fecha["fecha_americ"] = 'N';
-		}
-
-	}
-	*/
+		$fecha = $dia.'/'.$mes.'/'.$anno;			
 
 	return $fecha;
 }
@@ -688,6 +599,8 @@ function CambiarMes($fecha)
 	$fecha_cadena = $fecha;
 	$buscar1 = "/";
 	$buscar2 = "-";
+	$fecha_separada = Array();
+	
 	
 	if (str_contains($fecha_cadena,$buscar1))
 	{
@@ -703,54 +616,9 @@ function CambiarMes($fecha)
 
 		$fecha = Valida_mes($fecha_separada);
 
-		//print_r($fecha_validada);
-		//die;
-/*
-		if ($fecha_validada["fecha_mex"] == 'S')
-		{
-			$indice = 1; // Fecha Mexicana
-		}
-		elseif ($fecha_validada["fecha_americ"] == 'S')
-		{
-			$indice = 0;			// Fecha Americana
-		}
-		else
-		{
-			$indice = 1;
-			$fecha_separada[0] = '1';
-			$fecha_separada[2] = '1970';
-		}
 
-		//print_r($fecha_validada);
-		//print_r($indice);
-		//die();
-
-*/
-
-	
-	/*
-	
-
-		
-	/*
-	
-	//print_r($fecha_separada[1]);
+	//print_r($fecha);
 	//die();
-
-	if ($indice == 1) // Fecha Mexicana
-	{
-		$fecha = $fecha_separada[0].'/'.$nombre_mes.'/'.$fecha_separada[2];		
-	}
-	else // Fecha Americana
-	{
-		$fecha = $nombre_mes.'/'.$fecha_separada[1].'/'.$fecha_separada[2];
-	}
-
-
-*/
-
-	print_r($fecha);
-	die();
 
 	return $fecha;
 
@@ -934,9 +802,9 @@ function Depurar_Caracter_mac($cadena_Mac)
 
 							
 							//print_r($Mac_Address."\n");
-							print_r($garantia. "\n");							
+							//print_r($garantia. "\n");							
 							//print_r($ubicacion. "\n");							
-							die();
+							//die();
 							
 
 							$Seriales = trim($inv_it[3]);
@@ -1015,7 +883,7 @@ function Depurar_Caracter_mac($cadena_Mac)
 																		"imagen"=>$ruta
 																	);
 
-							if (($datos_grabar["id_modelo"] != "Sin Modelos") && ($datos_grabar["id_marca"] != "Sin Marcas") && ($datos_grabar["id_periferico"] != "Sin Perifericos"))
+							if (($datos_grabar["id_modelo"] != "Sin Modelos") && ($datos_grabar["id_marca"] != "Sin Marcas") && ($datos_grabar["id_periferico"] != "Sin Perifericos") && ($datos_grabar["id_ubicacion"] != "Sin Ubicacion"))
 							{
 								//$respuesta = "error";
 								$respuesta = "ok";
@@ -1237,6 +1105,7 @@ function Depurar_Caracter_mac($cadena_Mac)
 								print_r('Brand  Marca = '.$datos_grabar["id_marca"].' ; ');
 								print_r('Modelo = '.$datos_grabar["id_modelo"].' ; ');						
 								print_r('Serial = '.$inv_it[3].' ; ');
+								print_r('Ubicacion = '.$datos_grabar["id_ubicacion"].' ; ');						
 								//print_r('Numero Empleado = '.$EncontroEmpleado.' ; ');				
 								print "<br>";
 							}
